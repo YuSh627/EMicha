@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Balance from "../Components/Balance";
 import FeaturesHeading from "../Components/FeaturesHeading";
+import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 
 const TransactionHistory = () => {
   const [userData, setUserData] = useState();
@@ -14,6 +15,7 @@ const TransactionHistory = () => {
     const fetchData = async () => {
       const id = localStorage.getItem("id");
       const token = localStorage.getItem("token");
+
       try {
         const response = await axios.get(
           `https://springjava-production-e579.up.railway.app/api/transactions/${id} `,
@@ -28,6 +30,7 @@ const TransactionHistory = () => {
             },
           }
         );
+
         const processedTransactions = response.data.map((transaction) => {
           const date = new Date(transaction.timestamp);
 
@@ -188,24 +191,67 @@ const TransactionHistory = () => {
               borderRadius: 5,
               bgcolor: "rgba(66, 66, 66, 1)",
               width: "80%",
-              px: 2,
+              px: 4,
               py: 2.5,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
             }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <Typography fontWeight={"bolder"}>{th.receiverName}</Typography>
-              <Typography>Number: {th.phoneNumber}</Typography>
-              <Typography>Amount: {th.amount}</Typography>
-              <Typography>{th.formattedTime}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
+                justifyContent: "center",
+              }}>
+              <Typography
+                sx={{ display: "inline-flex", alignItems: "center" }}
+                fontWeight={"bolder"}>
+                {th.receiverName}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}>
+                Number: {th.phoneNumber}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}>
+                Amount: {""}
+                <Typography
+                  component="span"
+                  sx={{
+                    color: th.transactionRole === "Sent" ? "red" : "lightgreen",
+                    display: "inline-flex",
+                    alignItems: "center",
+                  }}>
+                  {th.transactionRole === "Sent" ? (
+                    <ArrowDropDown />
+                  ) : (
+                    <ArrowDropUp />
+                  )}
+                  {th.amount}
+                </Typography>
+              </Typography>
+              <Typography sx={{ display: "inline-flex", alignItems: "center" }}>
+                Time: {th.formattedTime}
+              </Typography>
+              <Typography sx={{ display: "inline-flex", alignItems: "center" }}>
+                Date: {th.formattedDate}
+              </Typography>
             </Box>
 
             <Chip
               label={th.status}
-              color={th.status === "SUCCESS" ? "success" : "primary"}
               variant="contained"
-              sx={{ fontWeight: "bold" }}
+              sx={{
+                fontWeight: "bold",
+                bgcolor: th.status === "SUCCESS" ? "lightgreen" : "red",
+              }}
             />
           </Box>
         ))}
