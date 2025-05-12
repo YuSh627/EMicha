@@ -10,6 +10,7 @@ const Navbar = ({ userData }) => {
   const handleClick = () => {
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("number");
       navigate("/login");
     } catch (error) {
       alert("no token found");

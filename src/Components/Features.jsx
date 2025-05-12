@@ -143,7 +143,7 @@ const Features = () => {
               flexDirection: "column",
               alignItems: "center",
             }}>
-            <IconButton size="large">
+            <IconButton size="large" onClick={() => navigate("/electricBill")}>
               <SendAndArchiveIcon fontSize="large" sx={{ color: "white" }} />
             </IconButton>
             <Typography>Electric Bill</Typography>

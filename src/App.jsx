@@ -6,17 +6,25 @@ import Home from "./pages/Home";
 import TransactionHistory from "./pages/TransactionHistory";
 import SendMoney from "./pages/SendMoney";
 import ElectricBill from "./pages/ElectricBill";
+import ProtectedRoute from "./Components/ProtectedRoutes";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/transactionHistory" element={<TransactionHistory />} />
         <Route path="/sendMoney" element={<SendMoney />} />
-        <Route path="/elecrricBill" element={<ElectricBill />} />
+        <Route path="/electricBill" element={<ElectricBill />} />
       </Routes>
     </Router>
   );
